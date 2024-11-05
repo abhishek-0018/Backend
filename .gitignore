@@ -1,2 +1,5 @@
 .env
 .node_modules
+.mongoose-aggregate-paginate-v2
+.bcrypt
+.jsonwebtoken
