@@ -3,3 +3,4 @@
 .mongoose-aggregate-paginate-v2
 .bcrypt
 .jsonwebtoken
+.package-lock.json
