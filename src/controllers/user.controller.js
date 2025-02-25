@@ -53,7 +53,7 @@ const registerUser =asyncHandler(async(req,res)=>{
 
     let coverLocalPath;
     if(!avatarLocalPath){
-        throw new ApiError(400,"Avatar file required");
+        throw new ApiError(404,"Avatar file required");
     }
 
     if(req.files&&Array.isArray(req.files.coverImage)&&req.files.coverImage.length>0){
