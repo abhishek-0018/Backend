@@ -1,5 +1,4 @@
 import multer from "multer";
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/temp')
@@ -10,6 +9,14 @@ const storage = multer.diskStorage({
     }
   })
 
-  export const upload= multer({
+  export const upload = multer({
     storage,
-  })
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith("video/") || file.mimetype.startsWith("image/")) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only video and image files are allowed"), false);
+        }
+    }
+});
