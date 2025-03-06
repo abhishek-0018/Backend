@@ -3,6 +3,8 @@ import {ApiError} from "../utils/ApiError.js"
 import {Video} from "../models/video.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
+import fs from "fs";
+import path from "path";
 
 const uploadVideo=asyncHandler(async(req,res)=>{
     const {title,description}=req.body;
@@ -52,4 +54,14 @@ const getVideos=asyncHandler(async(req,res)=>{
     )
 })
 
-export {uploadVideo,getVideos}
+const getUsersVideos=asyncHandler(async(req,res)=>{
+    const { owner } = req.query;
+    if (!owner) {
+        throw new ApiError(400, "User ID is required");
+    }
+
+    const videos = await Video.find({ owner:owner });
+    res.status(200).json(new ApiResponse(200, videos, "User videos fetched successfully"));
+})
+
+export {uploadVideo,getVideos,getUsersVideos}

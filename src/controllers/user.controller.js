@@ -424,4 +424,21 @@ const getWatchHistory=asyncHandler(async(req,res)=>{
     )
 })
 
-export {registerUser,loginUser,logoutUser,refreshAccessToken,changeCurrentPassword,getCurrentUser,updateAccountDetails,updateUserAvatar,updateUserCoverImage,getUserChannelProfile,getWatchHistory}
+const searchUser=asyncHandler(async(req,res)=>{
+    const {searchedUser}=req.query;
+    if(!searchedUser){
+        throw new ApiError(400,"Username is required");
+    }
+    const user = await User.findOne({username: searchedUser});
+    if(!user){
+        throw new ApiError(400,"Username doesn't exist");
+    }
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200,{user},"User logged In Successfully")
+    )
+})
+
+export {registerUser,loginUser,logoutUser,refreshAccessToken,changeCurrentPassword,getCurrentUser,updateAccountDetails,updateUserAvatar,updateUserCoverImage,getUserChannelProfile,getWatchHistory,searchUser}
